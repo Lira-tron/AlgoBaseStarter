@@ -1,41 +1,59 @@
-class LinkedList<E> {
+class LinkedList<E: Comparable<E>> {
 
-  fun add(value: E) : E {
+  fun add(value: E) {
 
-    return
   }
 
-  fun remove(value: E) : E {
-    return
+  fun remove(value: E) : Boolean {
+
   }
 
-  fun reverse() : LinkedList<E> {
-    return
+  fun removeAll(value: E) : Boolean {
+
   }
 
-  fun removeDuplicates() : LinkedList<E> {
-    return
+  fun reverse() {
   }
 
-  fun removeDuplicatesWithHashSet() : LinkedList<E> {
-    return
+  fun removeDuplicates() : Boolean{
+      return true
   }
 
-  fun removeKthFromEnd(k: Int) : E {
-    return
+  fun removeDuplicatesWithHashSet() : Boolean {
+    return true
+  }
+
+  fun removeKthFromEnd(k: Int) : E? {
+    return null
   }
 
   fun isCircular() : Boolean {
-    return
+    return true
   }
 
-  fun startCircularNode() : E {
-    return
+  fun isEmpty() : Boolean {
+    return true
+  }
+
+  fun startCircularNode() : LinkedListNode<E>? {
+    return null
+  }
+
+  fun sort() {
+
   }
 
   fun printList() : String {
-    return
+    return ""
   }
 
+  fun asSequence() = sequence {
+    var node = head
+    while(node != null) {
+      yield(node.value)
+      node = node.next
+    }
+  }
 
 }
+
