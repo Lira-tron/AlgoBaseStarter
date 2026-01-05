@@ -10,8 +10,8 @@ class LinkedListTest {
     @ParameterizedTest
     @MethodSource("providesAddLinkedList")
     fun `add success`(sizeList : Int, expected: List<Int>) {
-      val actual = buildList(sizeList)
-      validate(actual, expected)
+        val actual = buildList(sizeList)
+        validate(actual, expected)
     }
 
     @ParameterizedTest
