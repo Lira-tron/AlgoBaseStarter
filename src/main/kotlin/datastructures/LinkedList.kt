@@ -1,3 +1,5 @@
+package datastructures
+
 class LinkedList<E: Comparable<E>> {
 
   fun add(value: E) {
