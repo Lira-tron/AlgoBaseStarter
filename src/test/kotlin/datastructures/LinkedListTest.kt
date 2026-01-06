@@ -28,6 +28,14 @@ class LinkedListTest {
         validate(actual, expected)
     }
 
+    @ParameterizedTest
+    @MethodSource("providesReverseLinkedList")
+    fun `reverse success`(actual: LinkedList<Int>, expected: List<Int>) {
+        actual.reverse()
+        validate(actual, expected)
+    }
+
+
     private fun validate(actual: LinkedList<Int>, expected: List<Int>) {
         var index = 0
         for(value in actual.asSequence()) {
@@ -62,6 +70,14 @@ class LinkedListTest {
             Arguments.of(buildList(3), listOf(1,2), 3),
             Arguments.of(buildList(1), listOf<Int>(), 1),
             Arguments.of(buildList(2), listOf<Int>(1,2), 4),
+        )
+
+         @JvmStatic
+        fun providesReverseLinkedList() = listOf(
+            Arguments.of(buildList(3), listOf(3,2,1)),
+            Arguments.of(buildList(1), listOf(1)),
+            Arguments.of(buildList(5), listOf(5,4,3,2,1)),
+            Arguments.of(buildList(2), listOf(2,1)),
         )
 
         @JvmStatic
