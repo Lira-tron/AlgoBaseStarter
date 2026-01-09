@@ -49,6 +49,19 @@ class LinkedListTest {
         validate(actual, expected)
     }
 
+    @ParameterizedTest(name = "{index} => {2}")
+    @MethodSource("providesIsCircularLinkedList")
+    fun `isCircular success`(actual: LinkedList<Int>, isCircular: Boolean, displayName: String) {
+        actual.isCircular() shouldBe isCircular
+    }
+
+    @ParameterizedTest(name = "{index} => {2}")
+    @MethodSource("providesStartCircularNode")
+    fun `startCircularNode success`(actual: LinkedList<Int>, expectedValue: Int?, displayName: String) {
+        val result = actual.startCircularNode()
+        result?.value shouldBe expectedValue
+    }
+
     @ParameterizedTest(name = "{index} => {4}")
     @MethodSource("providesRemoveKthFromEnd")
     fun `removeKthFromEnd success`(
@@ -267,6 +280,60 @@ class LinkedListTest {
                     listOf(1, 3, 4, 5),
                     "remove 4th element from end (k=4) from list [1,2,3,4,5]"
                 ),
+            )
+        }
+
+        @JvmStatic
+        fun providesIsCircularLinkedList(): List<Arguments> {
+            val emptyList = LinkedList<Int>()
+
+            val singleElementList = buildList(1)
+
+            val noCircularList = buildList(3)
+
+            val circularListAtEnd = buildList(3)
+            circularListAtEnd.last?.next = circularListAtEnd.root
+
+            val circularListAtMiddle = buildList(4)
+            circularListAtMiddle.last?.next = circularListAtMiddle.root?.next
+
+            val circularListAtEndToEnd = buildList(3)
+            circularListAtEndToEnd.last?.next = circularListAtEndToEnd.last
+
+            return listOf(
+                Arguments.of(emptyList, false, "empty list is not circular"),
+                Arguments.of(singleElementList, false, "single element list [1] is not circular"),
+                Arguments.of(noCircularList, false, "list [1,2,3] is not circular"),
+                Arguments.of(circularListAtEnd, true, "list [1,2,3] circular at end (3->1)"),
+                Arguments.of(circularListAtMiddle, true, "list [1,2,3,4] circular at middle (4->2)"),
+                Arguments.of(circularListAtEndToEnd, true, "list [1,2,3] circular at end (3->3)"),
+            )
+        }
+
+        @JvmStatic
+        fun providesStartCircularNode(): List<Arguments> {
+            val emptyList = LinkedList<Int>()
+
+            val singleElementList = buildList(1)
+
+            val noCircularList = buildList(3)
+
+            val circularListAtEnd = buildList(3)
+            circularListAtEnd.last?.next = circularListAtEnd.root
+
+            val circularListAtMiddle = buildList(4)
+            circularListAtMiddle.last?.next = circularListAtMiddle.root?.next
+
+            val circularListAtSecond = buildList(5)
+            circularListAtSecond.last?.next = circularListAtSecond.root?.next
+
+            return listOf(
+                Arguments.of(emptyList, null, "empty list has no circular start node"),
+                Arguments.of(singleElementList, null, "single element list [1] has no circular start node"),
+                Arguments.of(noCircularList, null, "list [1,2,3] has no circular start node"),
+                Arguments.of(circularListAtEnd, 1, "list [1,2,3] circular at end (3->1) starts at 1"),
+                Arguments.of(circularListAtMiddle, 2, "list [1,2,3,4] circular at middle (4->2) starts at 2"),
+                Arguments.of(circularListAtSecond, 2, "list [1,2,3,4,5] circular at second (5->2) starts at 2"),
             )
         }
     }
